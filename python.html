@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Course - メローキタブ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f8fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #306998 0%, #4B8BBE 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #FFD43B;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .site-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-content {
+            display: flex;
+            margin: 30px 0;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar h2 {
+            color: #306998;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #FFD43B;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .modules {
+            list-style: none;
+        }
+        
+        .modules li {
+            margin-bottom: 12px;
+        }
+        
+        .modules a {
+            display: block;
+            padding: 12px 15px;
+            color: #444;
+            text-decoration: none;
+            border-left: 4px solid #e0e0e0;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .modules a:hover {
+            background: #f0f7ff;
+            border-left: 4px solid #306998;
+            transform: translateX(5px);
+        }
+        
+        .modules a.active {
+            background: #e6f2ff;
+            border-left: 4px solid #306998;
+            color: #306998;
+            font-weight: 600;
+        }
+        
+        .lesson-check {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .content-area {
+            flex: 3;
+            background: white;
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            min-height: 600px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .lesson-title {
+            color: #306998;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lesson-content {
+            margin-bottom: 35px;
+        }
+        
+        .lesson-content h3 {
+            color: #4B8BBE;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .lesson-content p {
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+        
+        .lesson-content ul, .lesson-content ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        .lesson-content li {
+            margin-bottom: 10px;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .code-example .keyword {
+            color: #c678dd;
+        }
+        
+        .code-example .function {
+            color: #61afef;
+        }
+        
+        .code-example .string {
+            color: #98c379;
+        }
+        
+        .code-example .comment {
+            color: #5c6370;
+        }
+        
+        .code-example .number {
+            color: #d19a66;
+        }
+        
+        .note {
+            background: #f8f9fa;
+            border-left: 4px solid #4B8BBE;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .exercise {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: #306998;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: #4B8BBE;
+        }
+        
+        .btn-secondary {
+            background: #FFD43B;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #ffde59;
+        }
+        
+        .complete-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            width: 100%;
+            display: block;
+        }
+        
+        .complete-btn:hover {
+            background: #218838;
+        }
+        
+        .complete-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            margin-top: 50px;
+            border-top: 5px solid #FFD43B;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .site-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="site-title">Python Course</div>
+                <div class="header-nav">
+                    <a href="menu.html" class="nav-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="dashboard.html" class="nav-btn">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a>
+                    <button class="nav-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>Course Content</h2>
+                <ul class="modules">
+                    <li><a class="nav-link active" data-page="intro"><span class="lesson-check"></span>Introduction to Python</a></li>
+                    <li><a class="nav-link" data-page="variables"><span class="lesson-check"></span>Variables & Data Types</a></li>
+                    <li><a class="nav-link" data-page="operators"><span class="lesson-check"></span>Operators & Expressions</a></li>
+                    <li><a class="nav-link" data-page="control-flow"><span class="lesson-check"></span>Control Flow</a></li>
+                    <li><a class="nav-link" data-page="functions"><span class="lesson-check"></span>Functions</a></li>
+                    <li><a class="nav-link" data-page="data-structures"><span class="lesson-check"></span>Data Structures</a></li>
+                    <li><a class="nav-link" data-page="file-handling"><span class="lesson-check"></span>File Handling</a></li>
+                    <li><a class="nav-link" data-page="error-handling"><span class="lesson-check"></span>Error Handling</a></li>
+                    <li><a class="nav-link" data-page="oop"><span class="lesson-check"></span>OOP Concepts</a></li>
+                    <li><a class="nav-link" data-page="project"><span class="lesson-check"></span>Final Project</a></li>
+                </ul>
+            </div>
+
+            <div class="content-area">
+                <!-- Introduction Page -->
+                <div id="intro" class="page active">
+                    <h2 class="lesson-title">Lesson 1: Introduction to Python</h2>
+                    
+                    <div class="lesson-content">
+                        <h3>Pythonとは</h3>
+                        <p>Python（パイソン）は、シンプルで分かりやすい文法を持つプログラミング言語です。
+初心者でも学びやすく、世界中で幅広く利用されています。.</p>
+                            <p>Pythonは、個人の学習目的から企業の大規模システムまで、さまざまな場面で使われています。</p>
+                        
+                        <div class="note">
+                            <h4>知っていましたか？</h4>
+                            <p>Python は、ヘビではなく、イギリスのコメディ グループ Monty Python にちなんで名付けられました。</p>
+                        </div>
+                        
+                        <h3>Pythonの特徴</h3>
+                        <p>Pythonには次のような特徴があります。</p>
+                        <ul>
+                            <li>文法がシンプルで読みやすい</li>
+                            <li>少ないコード量でプログラムを書ける</li>
+                            <li>初心者でも理解しやすい</li>
+                            <li>Windows、macOS、Linuxで動作する</li>
+                            <li>多くの便利なライブラリが用意されている</li>
+                            
+                        </ul>
+                        <p>これらの理由から、Pythonは最初に学ぶプログラミング言語として非常に人気があります。</p>
+                        
+                        <h3>Pythonでできること</h3>
+                        <p>Pythonを使うと、次のようなことが可能です。</p>
+                        <ul>
+                            <li>WebサイトやWebアプリケーションの開発</li>
+                            <li>データ分析やグラフの作成</li>
+                            <li>人工知能（AI）や機械学習の開発</li>
+                            <li>ファイル操作や作業の自動化</li>
+                            <li>ゲームやツールの作成</li>
+                            
+                        </ul>
+                        
+                        <h3>はじめてのPythonプログラム</h3>
+                        <p>Pythonで最も基本的な操作は、画面に文字を表示することです。</p>
+                        
+                        <div class="code-example">
+                            <span class="comment"># writing hello, カットリソニス!</span><br>
+                            <span class="function">print</span>(<span class="string">"Hello, カットリソニス!"</span>)<br>
+                            <span class="comment"># Output: Hello, カットリソニス!</span>
+                        </div>
+                        
+                        <div class="exercise">
+                            <h4>自分で試してみる</h4>
+                            <p>Python インタープリターを開くか、Python ファイルを作成して、次の操作を試してください。</p>
+                            <ol>
+                                <li>print()関数を使って名前を印刷する</li>
+                                <li>10が5より大適切なインデントなしでコードを書いて、どのようなエラーが発生するか確認してみましょう。きいかどうかをチェックし、メッセージを出力するif文を書いてください。</li>
+                                <li></li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn" disabled>Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="variables">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <!-- Variables Page -->
+                <div id="variables" class="page">
+                    <h2 class="lesson-title">Lesson 2: Variables & Data Types</h2>
+                    
+                    <div class="lesson-content">
+                        <h3>What are Variables?</h3>
+                        <p>Variables are used to store data values. In Python, you don't need to declare a variable with a specific type. The type is inferred from the value you assign.</p>
+                        
+                        <div class="code-example">
+                            <span class="comment"># Variable assignment</span><br>
+                            name = <span class="string">"John"</span><br>
+                            age = <span class="number">25</span><br>
+                            height = <span class="number">5.9</span><br>
+                            is_student = <span class="keyword">True</span><br>
+                        </div>
+                        
+                        <h3>Basic Data Types</h3>
+                        <ul>
+                            <li><strong>Integers:</strong> Whole numbers (e.g., 5, -3, 1000)</li>
+                            <li><strong>Floats:</strong> Decimal numbers (e.g., 3.14, -0.5, 2.0)</li>
+                            <li><strong>Strings:</strong> Text data (e.g., "hello", 'Python')</li>
+                            <li><strong>Booleans:</strong> True or False values</li>
+                            <li><strong>None:</strong> Represents absence of value</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="intro">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="operators">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <!-- Other lesson pages (simplified) -->
+                <div id="operators" class="page">
+                    <h2 class="lesson-title">Lesson 3: Operators & Expressions</h2>
+                    <div class="lesson-content">
+                        <p>Learn about arithmetic, comparison, and logical operators in Python.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="variables">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="control-flow">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="control-flow" class="page">
+                    <h2 class="lesson-title">Lesson 4: Control Flow</h2>
+                    <div class="lesson-content">
+                        <p>Learn about if statements, loops, and control structures.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="operators">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="functions">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="functions" class="page">
+                    <h2 class="lesson-title">Lesson 5: Functions</h2>
+                    <div class="lesson-content">
+                        <p>Learn how to create and use functions in Python.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="control-flow">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="data-structures">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="data-structures" class="page">
+                    <h2 class="lesson-title">Lesson 6: Data Structures</h2>
+                    <div class="lesson-content">
+                        <p>Learn about lists, tuples, dictionaries, and sets.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="functions">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="file-handling">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="file-handling" class="page">
+                    <h2 class="lesson-title">Lesson 7: File Handling</h2>
+                    <div class="lesson-content">
+                        <p>Learn how to read from and write to files in Python.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="data-structures">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="error-handling">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="error-handling" class="page">
+                    <h2 class="lesson-title">Lesson 8: Error Handling</h2>
+                    <div class="lesson-content">
+                        <p>Learn how to handle errors and exceptions in Python.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="file-handling">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="oop">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="oop" class="page">
+                    <h2 class="lesson-title">Lesson 9: OOP Concepts</h2>
+                    <div class="lesson-content">
+                        <p>Learn about Object-Oriented Programming in Python.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="error-handling">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="project">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="project" class="page">
+                    <h2 class="lesson-title">Lesson 10: Final Project</h2>
+                    <div class="lesson-content">
+                        <p>Build a complete Python project to apply what you've learned.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="oop">Previous Lesson</button>
+                        <button class="btn" disabled>Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Python Course - メローキタブ</p>
+            <p>中央情報専門学校 TEAM E</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!auth.isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Course name
+            const course = 'python';
+            
+            // Navigation elements
+            const navLinks = document.querySelectorAll('.nav-link');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    auth.logoutUser();
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Function to show a page
+            function showPage(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show requested page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                
+                // Update complete button
+                updateCompleteButton(pageId);
+            }
+            
+            // Update complete button state
+            function updateCompleteButton(lessonId) {
+                const completeBtn = document.querySelector('.complete-btn');
+                const isCompleted = auth.isLessonCompleted(course, lessonId);
+                
+                if (completeBtn) {
+                    if (isCompleted) {
+                        completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                        completeBtn.disabled = true;
+                        completeBtn.style.background = '#6c757d';
+                    } else {
+                        completeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Mark as Complete';
+                        completeBtn.disabled = false;
+                        completeBtn.style.background = '#28a745';
+                        
+                        // Update click handler
+                        completeBtn.onclick = function() {
+                            markLessonComplete(lessonId);
+                        };
+                    }
+                }
+            }
+            
+            // Mark lesson as complete
+            function markLessonComplete(lessonId) {
+                auth.updateUserProgress(course, lessonId, true);
+                
+                // Update button
+                const completeBtn = document.querySelector('.complete-btn');
+                if (completeBtn) {
+                    completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                    completeBtn.disabled = true;
+                    completeBtn.style.background = '#6c757d';
+                }
+                
+                // Update sidebar
+                const lessonLink = document.querySelector(`.nav-link[data-page="${lessonId}"]`);
+                if (lessonLink) {
+                    const checkSpan = lessonLink.querySelector('.lesson-check');
+                    if (checkSpan) {
+                        checkSpan.innerHTML = '<i class="fas fa-check-circle"></i>';
+                        checkSpan.style.color = '#28a745';
+                    }
+                }
+                
+                // Show message
+                alert('Lesson marked as complete!');
+            }
+            
+            // Initialize progress
+            function initializeProgress() {
+                const progress = auth.getCourseProgress(course);
+                
+                // Add checkmarks to completed lessons
+                navLinks.forEach(link => {
+                    const lessonId = link.getAttribute('data-page');
+                    if (progress.lessons && progress.lessons[lessonId] && progress.lessons[lessonId].completed) {
+                        const checkSpan = link.querySelector('.lesson-check');
+                        if (checkSpan) {
+                            checkSpan.innerHTML = '<i class="fas fa-check-circle"></i>';
+                            checkSpan.style.color = '#28a745';
+                        }
+                    }
+                });
+            }
+            
+            // Event listeners
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            });
+            
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const nextPage = this.getAttribute('data-next');
+                    if (nextPage) showPage(nextPage);
+                });
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const prevPage = this.getAttribute('data-prev');
+                    if (prevPage) showPage(prevPage);
+                });
+            });
+            
+            // Complete button click handler (will be updated per page)
+            const completeBtn = document.querySelector('.complete-btn');
+            if (completeBtn) {
+                completeBtn.addEventListener('click', function() {
+                    const activePage = document.querySelector('.page.active');
+                    if (activePage) {
+                        markLessonComplete(activePage.id);
+                    }
+                });
+            }
+            
+            // Initialize
+            initializeProgress();
+            updateCompleteButton('intro'); // For initial page
+        });
+    </script>
+</body>
+</html>

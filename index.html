@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メローキタブ - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .book-animation {
+            position: relative;
+            width: 60px;
+            height: 50px;
+            perspective: 500px;
+        }
+
+        .book {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(-20deg);
+            animation: bookOpen 6s infinite ease-in-out;
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #8e44ad, #3498db);
+            border-radius: 5px 10px 10px 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform-origin: left center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .book-pages {
+            position: absolute;
+            width: 95%;
+            height: 95%;
+            background: white;
+            border-radius: 4px 8px 8px 4px;
+            left: 5%;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes bookOpen {
+            0%, 100% { transform: rotateY(-20deg); }
+            50% { transform: rotateY(-150deg); }
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .form-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-header h2 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 12px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab.active {
+            color: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+        }
+
+        .form-container {
+            position: relative;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 400px;
+        }
+
+        .form {
+            position: absolute;
+            width: 100%;
+            padding: 10px 20px 20px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateX(100%);
+            visibility: hidden;
+        }
+
+        .form.active {
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding-right: 45px;
+        }
+
+        .input-group input:focus {
+            border-color: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: white;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .checkbox input {
+            margin-right: 10px;
+        }
+
+        .checkbox a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .form-footer {
+            margin-top: 15px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-footer p {
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 500px) {
+            .tabs {
+                justify-content: center;
+            }
+            .tab {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .form-container {
+                min-height: 380px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="book-animation">
+                <div class="book">
+                    <div class="book-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="book-pages"></div>
+                </div>
+            </div>
+            <div class="logo-text">メロー キタブ</div>
+        </div>
+        
+        <div class="form-header">
+            <h2>Log in or Sign up</h2>
+            <p>Access your account or create a new one</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="login">Login</div>
+            <div class="tab" data-tab="signup">Sign Up</div>
+        </div>
+        
+        <div class="form-container">
+            <div id="login-success" class="success-message">
+                Login successful! Redirecting...
+            </div>
+            
+            <form id="login-form" class="form active">
+                <div class="input-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                    <div class="error-message" id="login-email-error">Please enter a valid email address</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <i class="password-toggle fas fa-eye" id="login-password-toggle"></i>
+                    <div class="error-message" id="login-password-error">Password is required</div>
+                </div>
+                
+                <div class="checkbox">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                
+                <button type="submit" class="btn" id="login-btn">Login</button>
+                
+                <div class="form-footer">
+                    <p>Forgot your password? <a href="#">Reset here</a></p>
+                    <p>Don't have an account? <a href="#" id="goto-signup">Sign up here</a></p>
+                </div>
+            </form>
+            
+            <div id="signup-success" class="success-message">
+                Account created successfully! Welcome to メローキタブ.
+            </div>
+            
+            <form id="signup-form" class="form">
+                <div class="input-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="signup-name-error">Please enter your full name</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    <div class="error-message" id="signup-email-error">Please enter a valid email address</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                    <i class="password-toggle fas fa-eye" id="signup-password-toggle"></i>
+                    <div class="error-message" id="signup-password-error">Password must be at least 8 characters</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                    <i class="password-toggle fas fa-eye" id="signup-confirm-toggle"></i>
+                    <div class="error-message" id="signup-confirm-error">Passwords do not match</div>
+                </div>
+                
+                <div class="checkbox">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+                </div>
+                
+                <button type="submit" class="btn" id="signup-btn">Create Account</button>
+                
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" id="goto-login">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // If already logged in, redirect to menu
+            if (auth.isLoggedIn()) {
+                window.location.href = 'menu.html';
+            }
+            
+            // Tab switching
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form');
+            const gotoLogin = document.getElementById('goto-login');
+            const gotoSignup = document.getElementById('goto-signup');
+            
+            function switchTab(tabType) {
+                tabs.forEach(t => t.classList.remove('active'));
+                document.querySelector(`.tab[data-tab="${tabType}"]`).classList.add('active');
+                
+                forms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === `${tabType}-form`) {
+                        form.classList.add('active');
+                    }
+                });
+                
+                document.getElementById('login-success').style.display = 'none';
+                document.getElementById('signup-success').style.display = 'none';
+            }
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabType = this.getAttribute('data-tab');
+                    switchTab(tabType);
+                });
+            });
+            
+            gotoLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('login');
+            });
+            
+            gotoSignup.addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('signup');
+            });
+            
+            // Password visibility toggles
+            const setupPasswordToggle = (inputId, toggleId) => {
+                const passwordInput = document.getElementById(inputId);
+                const toggleIcon = document.getElementById(toggleId);
+                
+                toggleIcon.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        toggleIcon.classList.remove('fa-eye');
+                        toggleIcon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        toggleIcon.classList.remove('fa-eye-slash');
+                        toggleIcon.classList.add('fa-eye');
+                    }
+                });
+            };
+            
+            setupPasswordToggle('login-password', 'login-password-toggle');
+            setupPasswordToggle('signup-password', 'signup-password-toggle');
+            setupPasswordToggle('signup-confirm', 'signup-confirm-toggle');
+            
+            // Form validation and submission
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            
+            function showError(inputId, errorId, message) {
+                document.getElementById(errorId).textContent = message;
+                document.getElementById(errorId).style.display = 'block';
+                document.getElementById(inputId).style.borderColor = '#ff6b6b';
+            }
+            
+            function hideError(inputId, errorId) {
+                document.getElementById(errorId).style.display = 'none';
+                document.getElementById(inputId).style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }
+            
+            // Login form validation
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (!email) {
+                    showError('login-email', 'login-email-error', 'Email is required');
+                    isValid = false;
+                } else if (!auth.isValidEmail(email)) {
+                    showError('login-email', 'login-email-error', 'Please enter a valid email');
+                    isValid = false;
+                } else {
+                    hideError('login-email', 'login-email-error');
+                }
+                
+                if (!password) {
+                    showError('login-password', 'login-password-error', 'Password is required');
+                    isValid = false;
+                } else {
+                    hideError('login-password', 'login-password-error');
+                }
+                
+                if (isValid) {
+                    loginBtn.classList.add('loading');
+                    loginBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        const user = auth.loginUser(email, password);
+                        
+                        if (user) {
+                            document.getElementById('login-success').style.display = 'block';
+                            setTimeout(() => {
+                                window.location.href = 'menu.html';
+                            }, 1500);
+                        } else {
+                            loginBtn.classList.remove('loading');
+                            loginBtn.disabled = false;
+                            showError('login-email', 'login-email-error', 'Invalid email or password');
+                            showError('login-password', 'login-password-error', 'Invalid email or password');
+                        }
+                    }, 1000);
+                }
+            });
+            
+            // Signup form validation
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirm = document.getElementById('signup-confirm').value;
+                const terms = document.getElementById('terms').checked;
+                
+                if (!name) {
+                    showError('signup-name', 'signup-name-error', 'Name is required');
+                    isValid = false;
+                } else {
+                    hideError('signup-name', 'signup-name-error');
+                }
+                
+                if (!email) {
+                    showError('signup-email', 'signup-email-error', 'Email is required');
+                    isValid = false;
+                } else if (!auth.isValidEmail(email)) {
+                    showError('signup-email', 'signup-email-error', 'Please enter a valid email');
+                    isValid = false;
+                } else {
+                    hideError('signup-email', 'signup-email-error');
+                }
+                
+                if (!password) {
+                    showError('signup-password', 'signup-password-error', 'Password is required');
+                    isValid = false;
+                } else if (password.length < 8) {
+                    showError('signup-password', 'signup-password-error', 'Password must be at least 8 characters');
+                    isValid = false;
+                } else {
+                    hideError('signup-password', 'signup-password-error');
+                }
+                
+                if (!confirm) {
+                    showError('signup-confirm', 'signup-confirm-error', 'Please confirm your password');
+                    isValid = false;
+                } else if (password !== confirm) {
+                    showError('signup-confirm', 'signup-confirm-error', 'Passwords do not match');
+                    isValid = false;
+                } else {
+                    hideError('signup-confirm', 'signup-confirm-error');
+                }
+                
+                if (!terms) {
+                    alert('Please agree to the Terms & Conditions');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    signupBtn.classList.add('loading');
+                    signupBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        const result = auth.registerUser(name, email, password);
+                        
+                        if (result.success) {
+                            document.getElementById('signup-success').style.display = 'block';
+                            signupForm.reset();
+                            setTimeout(() => {
+                                window.location.href = 'menu.html';
+                            }, 2000);
+                        } else {
+                            signupBtn.classList.remove('loading');
+                            signupBtn.disabled = false;
+                            alert(result.message);
+                        }
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Course - メローキタブ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff5e6;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ff8c00 0%, #ffa64d 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #cc7a00;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .site-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-content {
+            display: flex;
+            margin: 30px 0;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar h2 {
+            color: #cc7a00;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #ff8c00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .modules {
+            list-style: none;
+        }
+        
+        .modules li {
+            margin-bottom: 12px;
+        }
+        
+        .modules a {
+            display: block;
+            padding: 12px 15px;
+            color: #444;
+            text-decoration: none;
+            border-left: 4px solid #e0e0e0;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .modules a:hover {
+            background: #fff5e6;
+            border-left: 4px solid #cc7a00;
+            transform: translateX(5px);
+        }
+        
+        .modules a.active {
+            background: #fff0d9;
+            border-left: 4px solid #cc7a00;
+            color: #cc7a00;
+            font-weight: 600;
+        }
+        
+        .lesson-check {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .content-area {
+            flex: 3;
+            background: white;
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            min-height: 600px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .lesson-title {
+            color: #cc7a00;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ff8c00;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lesson-content {
+            margin-bottom: 35px;
+        }
+        
+        .lesson-content h3 {
+            color: #ff8c00;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .lesson-content p {
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+        
+        .lesson-content ul, .lesson-content ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        .lesson-content li {
+            margin-bottom: 10px;
+        }
+        
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .code-example .keyword {
+            color: #cc7832;
+        }
+        
+        .code-example .function {
+            color: #ffc66d;
+        }
+        
+        .code-example .string {
+            color: #6a8759;
+        }
+        
+        .code-example .comment {
+            color: #808080;
+        }
+        
+        .code-example .number {
+            color: #6897bb;
+        }
+        
+        .note {
+            background: #fffaf0;
+            border-left: 4px solid #ff8c00;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .exercise {
+            background: #fff5e6;
+            border: 1px solid #ffd9b3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: #cc7a00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: #ff8c00;
+        }
+        
+        .btn-secondary {
+            background: #ffa64d;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #ffb366;
+        }
+        
+        .complete-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            width: 100%;
+            display: block;
+        }
+        
+        .complete-btn:hover {
+            background: #218838;
+        }
+        
+        .complete-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: white;
+            margin-top: 50px;
+            border-top: 5px solid #ff8c00;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .site-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="site-title">Java Course</div>
+                <div class="header-nav">
+                    <a href="menu.html" class="nav-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="dashboard.html" class="nav-btn">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a>
+                    <button class="nav-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>Course Content</h2>
+                <ul class="modules">
+                    <li><a class="nav-link active" data-page="intro"><span class="lesson-check"></span>Introduction to Java</a></li>
+                    <li><a class="nav-link" data-page="variables"><span class="lesson-check"></span>Variables & Data Types</a></li>
+                    <li><a class="nav-link" data-page="operators"><span class="lesson-check"></span>Operators & Expressions</a></li>
+                    <li><a class="nav-link" data-page="control-flow"><span class="lesson-check"></span>Control Flow</a></li>
+                    <li><a class="nav-link" data-page="functions"><span class="lesson-check"></span>Methods</a></li>
+                    <li><a class="nav-link" data-page="oop"><span class="lesson-check"></span>OOP Concepts</a></li>
+                    <li><a class="nav-link" data-page="classes"><span class="lesson-check"></span>Classes & Objects</a></li>
+                    <li><a class="nav-link" data-page="inheritance"><span class="lesson-check"></span>Inheritance</a></li>
+                    <li><a class="nav-link" data-page="project"><span class="lesson-check"></span>Final Project</a></li>
+                </ul>
+            </div>
+
+            <div class="content-area">
+                <!-- Introduction Page -->
+                <div id="intro" class="page active">
+                    <h2 class="lesson-title">Lesson 1: Introduction to Java</h2>
+                    
+                    <div class="lesson-content">
+                        <h3>What is Java?</h3>
+                        <p>Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible. It was developed by Sun Microsystems and first released in 1995.</p>
+                        
+                        <div class="note">
+                            <h4>Did You Know?</h4>
+                            <p>Java was originally called Oak after an oak tree that stood outside James Gosling's office. Later it was renamed to Java, from Java coffee.</p>
+                        </div>
+                        
+                        <h3>Why Learn Java?</h3>
+                        <p>Java is versatile and widely used for:</p>
+                        <ul>
+                            <li>Enterprise applications</li>
+                            <li>Android app development</li>
+                            <li>Web applications</li>
+                            <li>Scientific computing</li>
+                            <li>Big data technologies (Hadoop, Spark)</li>
+                            <li>Game development</li>
+                        </ul>
+                        
+                        <h3>Your First Java Program</h3>
+                        <div class="code-example">
+                            <span class="keyword">public class</span> HelloWorld {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public static void</span> main(String[] args) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"Hello, World!"</span>);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                        
+                        <div class="exercise">
+                            <h4>Try It Yourself</h4>
+                            <p>Set up Java on your computer and try the following:</p>
+                            <ol>
+                                <li>Create and run the HelloWorld program</li>
+                                <li>Modify it to print your name</li>
+                                <li>Create a program that declares an integer variable and prints it</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn" disabled>Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="variables">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <!-- Variables Page -->
+                <div id="variables" class="page">
+                    <h2 class="lesson-title">Lesson 2: Variables & Data Types</h2>
+                    
+                    <div class="lesson-content">
+                        <h3>What are Variables?</h3>
+                        <p>Variables are containers for storing data values. In Java, you must declare a variable with a specific type before you can use it.</p>
+                        
+                        <div class="code-example">
+                            <span class="comment">// Variable declaration and assignment</span><br>
+                            <span class="keyword">int</span> age = <span class="number">25</span>;<br>
+                            <span class="keyword">double</span> height = <span class="number">5.9</span>;<br>
+                            <span class="keyword">char</span> grade = 'A';<br>
+                            <span class="keyword">boolean</span> isJavaFun = <span class="keyword">true</span>;<br>
+                            String name = <span class="string">"John"</span>;
+                        </div>
+                        
+                        <h3>Primitive Data Types</h3>
+                        <p>Java has 8 primitive data types:</p>
+                        <ul>
+                            <li><strong>byte:</strong> 8-bit integer (-128 to 127)</li>
+                            <li><strong>short:</strong> 16-bit integer (-32,768 to 32,767)</li>
+                            <li><strong>int:</strong> 32-bit integer (most commonly used)</li>
+                            <li><strong>long:</strong> 64-bit integer</li>
+                            <li><strong>float:</strong> Single-precision 32-bit floating point</li>
+                            <li><strong>double:</strong> Double-precision 64-bit floating point</li>
+                            <li><strong>boolean:</strong> true or false values</li>
+                            <li><strong>char:</strong> Single 16-bit Unicode character</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="intro">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="operators">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <!-- Other lesson pages (simplified) -->
+                <div id="operators" class="page">
+                    <h2 class="lesson-title">Lesson 3: Operators & Expressions</h2>
+                    <div class="lesson-content">
+                        <p>Learn about arithmetic, comparison, and logical operators in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="variables">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="control-flow">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="control-flow" class="page">
+                    <h2 class="lesson-title">Lesson 4: Control Flow</h2>
+                    <div class="lesson-content">
+                        <p>Learn about if statements, switch, and loops in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="operators">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="functions">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="functions" class="page">
+                    <h2 class="lesson-title">Lesson 5: Methods</h2>
+                    <div class="lesson-content">
+                        <p>Learn how to create and use methods (functions) in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="control-flow">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="oop">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="oop" class="page">
+                    <h2 class="lesson-title">Lesson 6: OOP Concepts</h2>
+                    <div class="lesson-content">
+                        <p>Learn about Object-Oriented Programming principles in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="functions">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="classes">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="classes" class="page">
+                    <h2 class="lesson-title">Lesson 7: Classes & Objects</h2>
+                    <div class="lesson-content">
+                        <p>Learn how to create classes and objects in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="oop">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="inheritance">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="inheritance" class="page">
+                    <h2 class="lesson-title">Lesson 8: Inheritance</h2>
+                    <div class="lesson-content">
+                        <p>Learn about inheritance and polymorphism in Java.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="classes">Previous Lesson</button>
+                        <button class="btn btn-secondary next-btn" data-next="project">Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+
+                <div id="project" class="page">
+                    <h2 class="lesson-title">Lesson 9: Final Project</h2>
+                    <div class="lesson-content">
+                        <p>Build a complete Java project to apply what you've learned.</p>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn prev-btn" data-prev="inheritance">Previous Lesson</button>
+                        <button class="btn" disabled>Next Lesson</button>
+                    </div>
+                    <button class="complete-btn" id="completeBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Java Course - メローキタブ</p>
+            <p>中央情報専門学校 TEAM E</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!auth.isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Course name
+            const course = 'java';
+            
+            // Navigation elements
+            const navLinks = document.querySelectorAll('.nav-link');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    auth.logoutUser();
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Function to show a page
+            function showPage(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show requested page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                
+                // Update complete button
+                updateCompleteButton(pageId);
+            }
+            
+            // Update complete button state
+            function updateCompleteButton(lessonId) {
+                const completeBtn = document.querySelector('.complete-btn');
+                const isCompleted = auth.isLessonCompleted(course, lessonId);
+                
+                if (completeBtn) {
+                    if (isCompleted) {
+                        completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                        completeBtn.disabled = true;
+                        completeBtn.style.background = '#6c757d';
+                    } else {
+                        completeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Mark as Complete';
+                        completeBtn.disabled = false;
+                        completeBtn.style.background = '#28a745';
+                        
+                        // Update click handler
+                        completeBtn.onclick = function() {
+                            markLessonComplete(lessonId);
+                        };
+                    }
+                }
+            }
+            
+            // Mark lesson as complete
+            function markLessonComplete(lessonId) {
+                auth.updateUserProgress(course, lessonId, true);
+                
+                // Update button
+                const completeBtn = document.querySelector('.complete-btn');
+                if (completeBtn) {
+                    completeBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                    completeBtn.disabled = true;
+                    completeBtn.style.background = '#6c757d';
+                }
+                
+                // Update sidebar
+                const lessonLink = document.querySelector(`.nav-link[data-page="${lessonId}"]`);
+                if (lessonLink) {
+                    const checkSpan = lessonLink.querySelector('.lesson-check');
+                    if (checkSpan) {
+                        checkSpan.innerHTML = '<i class="fas fa-check-circle"></i>';
+                        checkSpan.style.color = '#28a745';
+                    }
+                }
+                
+                // Show message
+                alert('Lesson marked as complete!');
+            }
+            
+            // Initialize progress
+            function initializeProgress() {
+                const progress = auth.getCourseProgress(course);
+                
+                // Add checkmarks to completed lessons
+                navLinks.forEach(link => {
+                    const lessonId = link.getAttribute('data-page');
+                    if (progress.lessons && progress.lessons[lessonId] && progress.lessons[lessonId].completed) {
+                        const checkSpan = link.querySelector('.lesson-check');
+                        if (checkSpan) {
+                            checkSpan.innerHTML = '<i class="fas fa-check-circle"></i>';
+                            checkSpan.style.color = '#28a745';
+                        }
+                    }
+                });
+            }
+            
+            // Event listeners
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            });
+            
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const nextPage = this.getAttribute('data-next');
+                    if (nextPage) showPage(nextPage);
+                });
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const prevPage = this.getAttribute('data-prev');
+                    if (prevPage) showPage(prevPage);
+                });
+            });
+            
+            // Complete button click handler
+            const completeBtn = document.querySelector('.complete-btn');
+            if (completeBtn) {
+                completeBtn.addEventListener('click', function() {
+                    const activePage = document.querySelector('.page.active');
+                    if (activePage) {
+                        markLessonComplete(activePage.id);
+                    }
+                });
+            }
+            
+            // Initialize
+            initializeProgress();
+            updateCompleteButton('intro'); // For initial page
+        });
+    </script>
+</body>
+</html>

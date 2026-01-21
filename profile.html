@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - メローキタブ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .profile-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-sidebar {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+        }
+        
+        .profile-main {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+        }
+        
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: white;
+        }
+        
+        .form-group input:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .progress-section {
+            margin-top: 30px;
+        }
+        
+        .progress-item {
+            margin-bottom: 20px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-user-circle"></i>
+                <span>My Profile</span>
+            </div>
+            <div class="nav-buttons">
+                <a href="menu.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="dashboard.html" class="nav-btn">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <button class="nav-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+        
+        <div class="profile-container">
+            <div class="profile-sidebar">
+                <div class="avatar-section">
+                    <div class="avatar" id="userAvatar">U</div>
+                    <h2 id="userName">User Name</h2>
+                    <p id="userEmail">user@example.com</p>
+                    <p>Member since: <span id="joinDate">2024</span></p>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="completedCount">0</div>
+                        <div class="stat-label">Lessons Completed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="readingTime">0</div>
+                        <div class="stat-label">Hours Read</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="streakDays">0</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="bookCount">0</div>
+                        <div class="stat-label">Books Saved</div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="editProfileBtn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+            </div>
+            
+            <div class="profile-main">
+                <h3><i class="fas fa-cog"></i> Account Settings</h3>
+                
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="nameInput" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="emailInput" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="newPassword" placeholder="Enter new password" disabled>
+                </div>
+                
+                <div id="saveButtons" style="display: none;">
+                    <button class="btn" id="saveChangesBtn">Save Changes</button>
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                </div>
+                
+                <h3 style="margin-top: 40px;"><i class="fas fa-chart-line"></i> Learning Progress</h3>
+                
+                <div class="progress-section" id="progressSection">
+                    <!-- Progress bars will be loaded here -->
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export My Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!auth.isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Get user data
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Update user info
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('joinDate').textContent = new Date(user.createdAt).getFullYear();
+            
+            // Fill form fields
+            document.getElementById('nameInput').value = user.name;
+            document.getElementById('emailInput').value = user.email;
+            
+            // Load stats
+            loadUserStats();
+            loadProgress();
+            
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    auth.logoutUser();
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Edit profile button
+            document.getElementById('editProfileBtn').addEventListener('click', function() {
+                const nameInput = document.getElementById('nameInput');
+                const emailInput = document.getElementById('emailInput');
+                const passwordInput = document.getElementById('newPassword');
+                const saveButtons = document.getElementById('saveButtons');
+                
+                if (nameInput.disabled) {
+                    // Enable editing
+                    nameInput.disabled = false;
+                    emailInput.disabled = false;
+                    passwordInput.disabled = false;
+                    passwordInput.placeholder = "Enter new password (optional)";
+                    
+                    // Show save buttons
+                    saveButtons.style.display = 'block';
+                    
+                    // Change button text
+                    this.innerHTML = '<i class="fas fa-times"></i> Cancel Editing';
+                } else {
+                    // Cancel editing
+                    resetForm();
+                }
+            });
+            
+            // Save changes button
+            document.getElementById('saveChangesBtn').addEventListener('click', function() {
+                saveProfileChanges();
+            });
+            
+            // Cancel button
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                resetForm();
+            });
+            
+            function resetForm() {
+                // Reset form fields
+                document.getElementById('nameInput').value = user.name;
+                document.getElementById('emailInput').value = user.email;
+                document.getElementById('newPassword').value = '';
+                
+                // Disable fields
+                document.getElementById('nameInput').disabled = true;
+                document.getElementById('emailInput').disabled = true;
+                document.getElementById('newPassword').disabled = true;
+                document.getElementById('newPassword').placeholder = "Enter new password";
+                
+                // Hide save buttons
+                document.getElementById('saveButtons').style.display = 'none';
+                
+                // Reset edit button
+                document.getElementById('editProfileBtn').innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            }
+            
+            function saveProfileChanges() {
+                const newName = document.getElementById('nameInput').value.trim();
+                const newEmail = document.getElementById('emailInput').value.trim();
+                const newPassword = document.getElementById('newPassword').value.trim();
+                
+                // Validate
+                if (!newName || !newEmail) {
+                    alert('Name and email are required');
+                    return;
+                }
+                
+                if (newEmail && !auth.isValidEmail(newEmail)) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                
+                // Get all users
+                const users = JSON.parse(localStorage.getItem('users'));
+                const userIndex = users.findIndex(u => u.id === user.id);
+                
+                if (userIndex !== -1) {
+                    // Check if email is already taken by another user
+                    const emailTaken = users.some(u => u.email === newEmail && u.id !== user.id);
+                    if (emailTaken) {
+                        alert('This email is already registered by another user');
+                        return;
+                    }
+                    
+                    // Update user data
+                    users[userIndex].name = newName;
+                    users[userIndex].email = newEmail;
+                    
+                    if (newPassword) {
+                        users[userIndex].password = newPassword;
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                    
+                    // Update UI
+                    document.getElementById('userName').textContent = newName;
+                    document.getElementById('userEmail').textContent = newEmail;
+                    document.getElementById('userAvatar').textContent = newName.charAt(0).toUpperCase();
+                    
+                    alert('Profile updated successfully!');
+                    resetForm();
+                }
+            }
+            
+            function loadUserStats() {
+                const progress = auth.getUserProgress();
+                let completedLessons = 0;
+                
+                // Count completed lessons
+                for (const course in progress) {
+                    const lessons = progress[course].lessons || {};
+                    for (const lesson in lessons) {
+                        if (lessons[lesson].completed) {
+                            completedLessons++;
+                        }
+                    }
+                }
+                
+                // Get saved books
+                const savedBooks = JSON.parse(localStorage.getItem('savedBooks') || '[]');
+                
+                // Update stats
+                document.getElementById('completedCount').textContent = completedLessons;
+                document.getElementById('bookCount').textContent = savedBooks.length;
+                
+                // Simple streak calculation (for demo)
+                const today = new Date();
+                const joinDate = new Date(user.createdAt);
+                const daysSinceJoin = Math.floor((today - joinDate) / (1000 * 60 * 60 * 24));
+                document.getElementById('streakDays').textContent = Math.min(daysSinceJoin, 7);
+            }
+            
+            function loadProgress() {
+                const progress = auth.getUserProgress();
+                const section = document.getElementById('progressSection');
+                
+                if (Object.keys(progress).length === 0) {
+                    section.innerHTML = '<p>No progress recorded yet. Start learning!</p>';
+                    return;
+                }
+                
+                let html = '';
+                for (const [course, data] of Object.entries(progress)) {
+                    const lessons = data.lessons || {};
+                    const completed = Object.values(lessons).filter(l => l.completed).length;
+                    const total = Object.keys(lessons).length;
+                    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+                    
+                    const courseName = course.charAt(0).toUpperCase() + course.slice(1);
+                    const courseIcon = course === 'python' ? 'fab fa-python' : 'fab fa-java';
+                    const courseColor = course === 'python' ? '#306998' : '#f89820';
+                    
+                    html += `
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span><i class="${courseIcon}" style="color: ${courseColor}; margin-right: 8px;"></i>${courseName}</span>
+                                <span>${completed}/${total} (${percentage}%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${percentage}%; background: ${courseColor};"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                section.innerHTML = html;
+            }
+        });
+        
+        function exportData() {
+            const user = auth.getCurrentUser();
+            const progress = auth.getUserProgress();
+            const savedBooks = JSON.parse(localStorage.getItem('savedBooks') || '[]');
+            
+            const data = {
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    joinDate: user.createdAt
+                },
+                progress: progress,
+                savedBooks: savedBooks,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(dataBlob);
+            downloadLink.download = `merokitab-data-${user.name}-${new Date().toISOString().split('T')[0]}.json`;
+            downloadLink.click();
+            
+            alert('Your data has been exported successfully!');
+        }
+    </script>
+</body>
+</html>
